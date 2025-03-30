@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite Especial</title>
+
+    <style>
+        body {
+            background-color: red;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .painel {
+            background-color: white;
+            width: 600px;
+            height: 400px;
+            border-radius: 20px;
+            text-align: center;
+            padding-top: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            position: relative;
+        }
+
+        #sim {
+            height: 40px;
+            width: 60px;
+            background-color: red;
+            border: 2px solid white;
+            border-radius: 10px;
+            color: white;
+            margin-left: -50px;
+            cursor: pointer;
+        }
+
+        #nao {
+            position: absolute;
+            height: 40px;
+            width: 60px;
+            background-color: red;
+            border: 2px solid white;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: left 0.3s ease, top 0.3s ease;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+        }
+
+        .nova-tela {
+            display: none;
+            background-color: white;
+            width: 600px;
+            height: 500px;
+            border-radius: 20px;
+            text-align: center;
+            padding-top: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        #voltar {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="painel" id="painel">
+        <h1>Você recebeu um convite muito especial</h1>
+        <img src="https://i.pinimg.com/originals/96/66/5d/96665d839f552bb2c94468080709df7d.gif" alt="">
+        <h2>Gostaria de abrir o convite?</h2>
+
+        <a href="javascript:void(0)"><button id="sim" onclick="mostrarNovaTela()">Sim!</button></a>
+        <button id="nao" onclick="fuja()" onmouseover="verificarTipoDispositivo()">Não!</button>
+    </div>
+
+    <div class="nova-tela" id="nova-tela">
+        <h1>Playlist (MUITO) especial</h1>
+        <p>fiz uma playlist com uma série de músicas que me fazem lembrar de você</p>
+		<p>todas as músicas têm um significado muito importante para mim e te dedico cada uma delas</p>
+		<p>a ideia é que você escute da forma que quiser, no tempo que quiser, no dia que quiser, se quiser pode falar comigo ou não, é toda sua, aproveite da forma que achar melhor</p>
+        <p>muitas beijocas</p>
+
+        <p><a href="https://music.youtube.com/playlist?list=PLvAaZipyOLpAUjTruEbiYPDDlSg6kjEXp&si=rQmhUf244VWO6FLR" target="_blank">(clica aqui s2)</a></p>
+        <button id="voltar" onclick="voltarParaPainel()">Voltar</button>
+    </div>
+
+    <script>
+        let timeout;
+
+        // Função que detecta o tipo de dispositivo (mobile ou desktop)
+        function verificarTipoDispositivo() {
+            const isMobile = window.innerWidth <= 768; // Usando a largura da janela para identificar dispositivo móvel
+
+            if (isMobile) {
+                document.getElementById("nao").onclick = fuja; // Usando o evento click para dispositivos móveis
+                document.getElementById("nao").onmouseover = null; // Desabilita o onmouseover
+            } else {
+                document.getElementById("nao").onmouseover = fuja; // Usando o evento onmouseover para desktops
+                document.getElementById("nao").onclick = null; // Desabilita o onclick
+            }
+        }
+
+        function fuja() {
+            var botaoNao = document.getElementById("nao");
+            var painel = document.getElementById("painel");
+
+            var larguraPainel = painel.offsetWidth;
+            var alturaPainel = painel.offsetHeight;
+
+            var maxX = larguraPainel - botaoNao.offsetWidth;
+            var maxY = alturaPainel - botaoNao.offsetHeight;
+
+            var aleatorioX = Math.floor(Math.random() * maxX);
+            var aleatorioY = Math.floor(Math.random() * maxY);
+
+            botaoNao.style.left = aleatorioX + "px";
+            botaoNao.style.top = aleatorioY + "px";
+
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                botaoNao.offsetHeight;
+            }, 10);
+        }
+
+        function mostrarNovaTela() {
+            document.getElementById('painel').style.display = 'none';
+            document.getElementById('nova-tela').style.display = 'block';
+        }
+
+        function voltarParaPainel() {
+            document.getElementById('nova-tela').style.display = 'none';
+            document.getElementById('painel').style.display = 'block';
+        }
+
+        // Inicializando a verificação de dispositivo assim que a página carregar
+        verificarTipoDispositivo();
+    </script>
+
+</body>
+</html>
